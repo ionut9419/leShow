@@ -1,0 +1,39 @@
+SpectateBundle\Entity\Spectate:
+    type: entity
+    table: null
+    repositoryClass: SpectateBundle\Repository\SpectateRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        author:
+            type: string
+            length: 255
+        description:
+            type: text
+        director:
+            type: string
+            length: 255
+        duration:
+            type: integer
+        status:
+            type: boolean
+    # oneToMany:
+    #     reprezentations:
+    #         targetEntity: SpectateBundle\Entity\Spectate
+    #         mappedBy: spectate
+    #         cascade: ['persist']
+    manyToOne:
+        image:
+            targetEntity: Application\Sonata\MediaBundle\Entity\Media
+            joinColumn:
+                name: image_id
+                referencedColumnName: id
+            cascade: ['persist', 'remove']
+    lifecycleCallbacks: {  }

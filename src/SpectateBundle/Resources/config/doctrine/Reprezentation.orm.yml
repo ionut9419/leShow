@@ -1,0 +1,28 @@
+SpectateBundle\Entity\Reprezentation:
+    type: entity
+    table: null
+    repositoryClass: SpectateBundle\Repository\ReprezentationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        location:
+            type: string
+            length: 255
+        date:
+            type: date
+        distribution:
+            type: text
+        numberOfSeats:
+            type: integer
+    manyToOne:
+        spectate:
+            targetEntity: SpectateBundle\Entity\Spectate
+            joinColumn:
+                name: spectate_id
+                referencedColumnName: id
+            cascade: ['persist']
+    lifecycleCallbacks: {  }

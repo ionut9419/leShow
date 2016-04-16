@@ -1,0 +1,11 @@
+spectate_listing_view:
+    path:     /
+    defaults: { _controller: SpectateBundle:Listing:viewSpectate }
+
+spectate_listing_details:
+    path:     /{spectate}
+    defaults: { _controller: SpectateBundle:Listing:viewSpectateDetails }
+
+spectate_listing_reprezentation:
+    path:     /reprezentation/{spectate}
+    defaults: { _controller: SpectateBundle:Listing:viewSpectateReprezentation }

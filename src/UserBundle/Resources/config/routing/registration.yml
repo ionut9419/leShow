@@ -1,0 +1,7 @@
+register_spectator:
+    path:     /spectator
+    defaults: { _controller: UserBundle:Registration:registerSpectator }
+
+register_administrator:
+    path:     /administrator
+    defaults: { _controller: UserBundle:Registration:registerAdministrator }

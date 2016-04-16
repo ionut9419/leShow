@@ -1,0 +1,7 @@
+# rezervation_make:
+#     path:     /make/{reprezentation}
+#     defaults: { _controller: RezervationBundle:Rezervation:rezervation }
+    
+rezervation_make_final:
+    path:     /make/final/
+    defaults: { _controller: RezervationBundle:FinalRezervation:rezervation }

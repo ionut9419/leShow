@@ -1,0 +1,16 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+
+{% block body %}
+	{{ form_start(userProfileForm) }}
+	<center>
+	<div class="4u">
+	{{ form_row(userProfileForm.firstName, {'attr': {'placeholder':'first name','class':'6u 12u$(xsmall)'}}) }}
+	{{ form_row(userProfileForm.lastName, {'attr': {'placeholder':'last name','class':'6u$ 12u$(xsmall)'}}) }}
+	{{ form_row(userProfileForm.contactNumber, {'attr': {'placeholder':'contact','class':'6u 12u$(xsmall)'}}) }}
+	<br>
+	{{ form_row(userProfileForm.submit, {'attr': {'placeholder':'contact','class':'6u 12u$(xsmall)'}}) }}
+	</div>
+	</center>
+	{{ form_end(userProfileForm) }}
+{% endblock %}

@@ -1,0 +1,29 @@
+RezervationBundle\Entity\Rezervation:
+    type: entity
+    table: null
+    repositoryClass: RezervationBundle\Repository\RezervationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        details:
+            type: text
+        seats:
+            type: text
+    manyToOne:
+        reprezentation:
+            targetEntity: SpectateBundle\Entity\Reprezentation
+            joinColumn:
+                name: reprezentation_id
+                referencedColumnName: id
+            cascade: ['persist']
+        user:
+            targetEntity: UserBundle\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+            cascade: ['persist']
+    lifecycleCallbacks: {  }

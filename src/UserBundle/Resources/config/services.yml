@@ -1,0 +1,29 @@
+services:
+#    user.example:
+#        class: UserBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+    fos_user.registration.form.factory:
+        class: UserBundle\Form\Factory\FormFactory
+        arguments: ["@form.factory", "%fos_user.registration.form.name%", "%fos_user.registration.form.type%", "%fos_user.registration.form.validation_groups%"]
+
+    user.form.type.user_registration:
+        class: UserBundle\Form\Type\UserType
+        tags:
+            - { name: form.type, alias: user_registration_type }
+
+    user.listener.change_password:
+        class: UserBundle\EventListener\ChangePasswordListener
+        arguments: ['@router']
+        tags:
+            - {name: kernel.event_subscriber}
+
+    user.listener.registration:
+        class: UserBundle\EventListener\RegistrationListener
+        tags:
+            - {name: kernel.event_subscriber}
+
+    user.admin.user:
+        class: UserBundle\Admin\UserAdmin
+        arguments: [~, UserBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: User }

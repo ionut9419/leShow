@@ -1,0 +1,35 @@
+{% extends "::base.html.twig" %}
+
+{% block header %}
+	{{ parent() }}
+{% endblock header %}
+
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+
+<center>
+<div class="4u">
+{% if reprezentation %}
+		{{ spectate.name }} | 
+		{{ spectate.author }} | 
+		{{ spectate.description }}
+		<br>
+	{% for r in reprezentation %}
+		{{ r.location }}
+		<a href="{{ url('rezervation_make', {'reprezentation' :r.id }) }}" class="button small">
+		Make Rezervation
+		</a>
+		<br>
+	{% endfor %}
+{% else %}
+	<h2>No Results Found</h2>
+	<br>
+	<a href="{{ url('spectate_listing_details', {'spectate' :spectate.id }) }}"
+	   class="button">
+	   Go back to {{ spectate.name }} details</a>
+{% endif %}
+</div>
+</center>
+
+{% endblock %}

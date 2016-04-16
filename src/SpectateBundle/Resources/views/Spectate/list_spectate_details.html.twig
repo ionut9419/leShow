@@ -1,0 +1,25 @@
+{% extends "::base.html.twig" %}
+
+{% block header %}
+	{{ parent() }}
+{% endblock header %}
+
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+
+<center>
+<br>
+<div class="4u">
+	<span class="image fit">
+		<img src="{% path spectate.image, 'reference' %}" />
+	</span>
+</div>
+	<br>
+		{{ spectate.name }} | 
+		{{ spectate.author }} | 
+		{{ spectate.description }}
+		<br>
+</center>
+
+{% endblock %}

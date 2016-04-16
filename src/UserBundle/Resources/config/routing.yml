@@ -1,0 +1,11 @@
+user_registration:
+    resource: "@UserBundle/Resources/config/routing/registration.yml"
+    prefix:   /register/
+
+user_profile:
+    resource: "@UserBundle/Resources/config/routing/profile.yml"
+    prefix:   /profile/
+
+user_home:
+    resource: "@UserBundle/Resources/config/routing/homepage.yml"
+    prefix:   /

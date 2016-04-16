@@ -1,0 +1,3 @@
+spectate_listing_list_spectate:
+    resource: "@SpectateBundle/Resources/config/routing/spectate.yml"
+    prefix:   /spectate/

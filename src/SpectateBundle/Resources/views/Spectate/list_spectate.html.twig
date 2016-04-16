@@ -1,0 +1,62 @@
+{% extends "::base.html.twig" %}
+
+{% block header %}
+	{{ parent() }}
+{% endblock header %}
+
+{% block sidebar %}
+<section id="sidebar">
+    <div class="inner">
+        <nav>
+            <ul>
+            	<li><a href="#intro"><b>Spectates</b></a></li>
+            	{% for s in spectates %}
+                <li><a href="#spectate{{ loop.index0 }}">{{ s.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</section>
+{% endblock sidebar %}
+
+{% block body %}
+<section id="intro" class="wrapper style1 fullscreen fade-up">
+    <div class="inner">
+        <h1>Spectates Home</h1>
+        <p>Just another fine responsive site template designed by<br />
+        and released for free under the <a href="http://html5up.net/license">Creative Commons</a>.</p>
+        <ul class="actions">
+            <li><a href="{{ url('user_homepage') }}" class="button">Home</a></li>
+            <li><a href="#spectate0" class="button scrolly">Learn more</a></li>
+        </ul>
+    </div>
+</section>
+
+{% for s in spectates %}
+    <section id="spectate{{ loop.index0 }}" class="wrapper style2 spotlights">
+		<section>
+			<a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" 
+               class="image">
+               <img src="{% path s.image, 'reference' %}" 
+                    alt="{{ s.name }}" 
+                    data-position="center center"/>
+            </a>
+				<div class="content">
+					<div class="inner">
+						<h2>{{ s.name }}</h2>
+						<p>{{ s.description }}</p>
+						<ul class="actions">
+                            <li><a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" 
+                                   class="button">View details</a>
+                            </li>
+                        	<li><a href="{{ url('spectate_listing_reprezentation', {'spectate' :s.id }) }}" 
+                                   class="button">View Reprezentations</a>
+                            </li>
+						</ul>
+                    </div>
+                </div>
+        </section>
+    </section>
+{% endfor %}
+
+{% endblock %}

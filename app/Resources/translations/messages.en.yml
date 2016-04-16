@@ -1,0 +1,7 @@
+user:
+    home: 'Home'
+    profile:
+        view: 'Profile'
+        edit: 'Edit Profile'
+spectate:
+    view: 'Spectate'

@@ -1,0 +1,19 @@
+symfony:
+  build: symfony/
+  entrypoint: /entrypoint.sh
+  volumes:
+    - .:/var/www/symfony2
+    - ./symfony/php.ini:/usr/local/etc/php/php.ini
+    - ./symfony/entrypoint.sh:/entrypoint.sh
+  working_dir: /var/www/symfony2
+
+nginx:
+  build: nginx/
+  ports:
+    - 80
+  volumes:
+    - .:/var/www/symfony2
+  working_dir: /var/www/symfony2
+
+fpm:
+  build: php/

@@ -1,0 +1,158 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@SpectateBundle/Resources/config/services.yml" }
+    - { resource: "@RezervationBundle/Resources/config/services.yml" }
+parameters:
+    locale: en
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enabled: true, enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+    
+fos_user:
+    db_driver:              orm
+    firewall_name:          main
+    user_class:             UserBundle\Entity\User
+    use_listener:           true
+    use_flash_notifications: true
+    use_username_form_type: true
+    model_manager_name:     null  # change it to the name of your entity/document manager if you don't want to use the default one.
+    from_email:
+        address:        '%email_address%'
+        sender_name:    '%sender_name%'
+    profile:
+        form:
+            type:               FOS\UserBundle\Form\Type\ProfileFormType
+            name:               fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    change_password:
+        form:
+            type:               FOS\UserBundle\Form\Type\ChangePasswordFormType
+            name:               fos_user_change_password_form
+            validation_groups:  [ChangePassword, Default]
+    registration:
+        confirmation:
+            enabled:    false
+            template:   FOSUserBundle:Registration:email.txt.twig
+        form:
+            type:               FOS\UserBundle\Form\Type\RegistrationFormType
+            name:               fos_user_registration_form
+            validation_groups:  [Registration, Default]
+    resetting:
+        token_ttl: 86400
+        email:
+            template:   FOSUserBundle:Resetting:email.txt.twig
+        form:
+            type:               FOS\UserBundle\Form\Type\ResettingFormType
+            name:               fos_user_resetting_form
+            validation_groups:  [ResetPassword, Default]
+    service:
+        mailer:                 fos_user.mailer.default
+        email_canonicalizer:    fos_user.util.canonicalizer.default
+        username_canonicalizer: fos_user.util.canonicalizer.default
+        token_generator:        fos_user.util.token_generator.default
+        user_manager:           fos_user.user_manager.default
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+        # ...
+
+sonata_media:
+    # if you don't use default namespace configuration
+    #class:
+    #    media: MyVendor\MediaBundle\Entity\Media
+    #    gallery: MyVendor\MediaBundle\Entity\Gallery
+    #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+    default_context: default
+    db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
+    contexts:
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+        spectate_image:
+            providers:
+                - sonata.media.provider.image
+                - sonata.media.provider.youtube
+            formats: ~
+
+
+
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../web/uploads/media
+            create:     false
+    providers:
+        image:
+            resizer: sonata.media.resizer.square

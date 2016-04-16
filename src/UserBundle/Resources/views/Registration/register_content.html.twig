@@ -1,0 +1,33 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+	
+	{{ form_start(form, 
+		{
+			'method': 'post', 
+			'attr': {
+				'class': 'fos_user_registration_register', 
+				'novalidate': ''
+				}
+		}) 
+	}}
+	<center>
+	<div class="4u">
+		{{ form_row(form.username, {'attr': {'placeholder':'username','class':'6u 12u$(xsmall)'}}) }}
+		{{ form_row(form.plainPassword, {'attr': {'placeholder':'password','class':'6u$ 12u$(xsmall)'}}) }}
+		{{ form_row(form.email, {'attr': {'placeholder':'email','class':'6u 12u$(xsmall)'}}) }}
+		{{ form_row(form.firstName, {'attr': {'placeholder':'first name','class':'6u 12u$(xsmall)'}}) }}
+		{{ form_row(form.lastName, {'attr': {'placeholder':'last name','class':'6u$ 12u$(xsmall)'}}) }}
+		{{ form_row(form.contactNumber, {'attr': {'placeholder':'contact','class':'6u 12u$(xsmall)'}}) }}
+	</div>
+	<br>
+	<div class="12u$">
+		<ul class="actions">
+	    	<li><input type="submit" value="{{ 'registration.submit'|trans }}" /></li>
+	    </ul>
+	</div>
+	    </center>
+	{{ form_end(form) }}
+	
+	
+{% endblock %}

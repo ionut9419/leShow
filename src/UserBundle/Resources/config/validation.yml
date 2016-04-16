@@ -1,0 +1,11 @@
+UserBundle\Entity\User:
+    properties:
+        firstName:
+            - NotBlank:
+                message: 'Please enter a first name'
+        lastName:
+            - NotBlank:
+                message: 'Please enter a last name'
+        contactNumber:
+            - NotBlank:
+                message: 'Please enter a contact number'

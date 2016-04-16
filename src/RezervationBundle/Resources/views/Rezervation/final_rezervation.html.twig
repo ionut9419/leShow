@@ -1,0 +1,76 @@
+{% extends "::base.html.twig" %}
+
+{% block header %}
+	{{ parent() }}
+{% endblock header %}
+
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+<center>
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+           {{ message }}
+        {% endfor %}
+  
+    {% endfor %}
+<br>
+	{{ form_start(rezervationForm) }}
+    <div class="row">
+        {{ form_widget(rezervationForm) }}
+    	<div id="seats">
+            {% if rezervationForm.seats is defined %}
+
+                {% block choice_widget %}
+                {% spaceless %}
+                    {% for child in rezervationForm.seats %}
+                    <h1>fdsf</h1>
+                            {{ form_widget(child)}}
+                            {{ form_label(child)}}
+                    {% endfor %}
+                {% endspaceless %}
+                {% endblock choice_widget %}
+                
+            {% endif %}
+    	</div>
+        <br>
+        {{ form_row(rezervationForm.submit) }}
+    </div>
+
+</center>
+{% endblock %}
+
+{% block javascripts %}
+	 {{ parent() }}
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            var $reprezentation = $('#rezervation_form_type_reprezentation');
+
+            $reprezentation.change(function() {
+
+                var $form = $(this).closest('form');
+
+                var data = {};
+                data[$reprezentation.attr('name')] = $reprezentation.val();
+
+                // Submit data via AJAX to the form's action path.
+                $.ajax({
+                    url : $form.attr('action'),
+                    type: $form.attr('method'),
+                    data : data,
+                    success: function(html) {
+
+                        // Replace current position field ...
+                        $('#seats').html(
+                            // ... with the returned one from the AJAX response.
+                            $(html).find('#rezervation_form_type_seats').parent()
+                        );
+
+                        // Position field now displays the appropriate positions.
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

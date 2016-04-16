@@ -1,0 +1,14 @@
+
+{% if is_granted('ROLE_SPECTATOR') %}
+   	<center>
+   		<h2>Welcome to your {{ 'user.profile.view' | trans() }}</h2>
+
+   		<ul class="alt">
+		   	<li>{{ user.firstName }}</li>
+		   	<li>{{ user.lastName }}</li>
+		   	<li>{{ user.username }}</li>
+		   	<li>{{ user.contactNumber }}</li>
+		   	<li><a href="{{ url('user_profile_edit') }}" class="button">{{ 'user.profile.edit' | trans }}</a></li>
+		</ul>
+	</center>
+{% endif %}

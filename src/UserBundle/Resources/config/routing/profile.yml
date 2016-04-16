@@ -1,0 +1,7 @@
+user_profile_show:
+    path:     /
+    defaults: { _controller: UserBundle:Profile:show }
+
+user_profile_edit:
+    path:     /edit
+    defaults: { _controller: UserBundle:Profile:editProfile }
