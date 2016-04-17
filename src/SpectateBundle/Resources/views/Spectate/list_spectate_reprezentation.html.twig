@@ -8,7 +8,6 @@
 
 {% block body %}
 
-<center>
 <div class="4u">
 {% if reprezentation %}
 		{{ spectate.name }} | 
@@ -17,9 +16,6 @@
 		<br>
 	{% for r in reprezentation %}
 		{{ r.location }}
-		<a href="{{ url('rezervation_make', {'reprezentation' :r.id }) }}" class="button small">
-		Make Rezervation
-		</a>
 		<br>
 	{% endfor %}
 {% else %}
@@ -30,6 +26,5 @@
 	   Go back to {{ spectate.name }} details</a>
 {% endif %}
 </div>
-</center>
 
 {% endblock %}

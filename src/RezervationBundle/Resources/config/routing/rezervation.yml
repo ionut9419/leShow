@@ -3,5 +3,5 @@
 #     defaults: { _controller: RezervationBundle:Rezervation:rezervation }
     
 rezervation_make_final:
-    path:     /make/final/
+    path:     /make/
     defaults: { _controller: RezervationBundle:FinalRezervation:rezervation }

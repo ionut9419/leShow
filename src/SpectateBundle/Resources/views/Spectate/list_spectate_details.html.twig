@@ -7,19 +7,22 @@
 {% block sidebar %}{% endblock %}
 
 {% block body %}
-
-<center>
 <br>
-<div class="4u">
-	<span class="image fit">
-		<img src="{% path spectate.image, 'reference' %}" />
-	</span>
-</div>
+<div class="row">
+	<blockquote>{{ spectate.description }}</blockquote>
 	<br>
-		{{ spectate.name }} | 
-		{{ spectate.author }} | 
-		{{ spectate.description }}
-		<br>
-</center>
+		<ul class="alt">
+			<li><b>Name:</b> {{ spectate.name }}</li>
+			<li>{{ spectate.author }}</li>
+			<li>{{ spectate.director }}</li>
+			<li>{{ spectate.duration }}</li>
+		</ul>
 
+						<div class="6u">
+							<span class="image right">
+								<img src="{% path spectate.image, 'reference' %}" />
+							</span>
+						</div>
+	
+</div>
 {% endblock %}

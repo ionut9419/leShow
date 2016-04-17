@@ -19,8 +19,7 @@ class FinalRezervationController extends Controller
         $rezervation->setUser($this->getUser());
 
         $rezervationForm = $this->createForm(
-            RezervationFormType::class,
-            $rezervation
+            RezervationFormType::class
         );
 
         $rezervationForm->handleRequest($request);

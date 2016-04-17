@@ -8,6 +8,12 @@ services:
         tags:
           - { name: form.type, alias: rezervation_form_type }
 
+    # rezervation.form.event.listener:
+    #     class: RezervationBundle\EventListener\SpectateListener
+    #     arguments: ["@doctrine.orm.entity_manager" ]
+    #     tags:
+    #       - { name: form.type, alias: spectate_listener }
+
     rezervation.admin.rezervation:
         class: RezervationBundle\Admin\RezervationAdmin
         arguments: [~, RezervationBundle\Entity\Rezervation, SonataAdminBundle:CRUD]

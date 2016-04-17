@@ -1,10 +1,23 @@
 {% extends "::base.html.twig" %}
 
+{% form_theme rezervationForm _self %}
+
 {% block header %}
 	{{ parent() }}
 {% endblock header %}
 
 {% block sidebar %}{% endblock %}
+
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+    {%- for child in form %}
+
+        {{- form_widget(child, {'checked':'false'}) -}} 
+        {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+        
+    {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
 
 {% block body %}
 <center>
@@ -16,26 +29,24 @@
     {% endfor %}
 <br>
 	{{ form_start(rezervationForm) }}
-    <div class="row">
-        {{ form_widget(rezervationForm) }}
+        <div class="4u$">
+            {{ form_row(rezervationForm.details) }}
+        </div>
+        <div class="4u$">
+            {{ form_row(rezervationForm.spectate) }}
+            <div id="reprezentation">
+            {% if rezervationForm.reprezentation is defined %}
+                {{ form_row(rezervationForm.reprezentation) }}
+            {% endif %}
+            </div>
+        </div>
     	<div id="seats">
             {% if rezervationForm.seats is defined %}
-
-                {% block choice_widget %}
-                {% spaceless %}
-                    {% for child in rezervationForm.seats %}
-                    <h1>fdsf</h1>
-                            {{ form_widget(child)}}
-                            {{ form_label(child)}}
-                    {% endfor %}
-                {% endspaceless %}
-                {% endblock choice_widget %}
-                
+                {{ form_row(rezervationForm.seats) }} 
             {% endif %}
     	</div>
         <br>
         {{ form_row(rezervationForm.submit) }}
-    </div>
 
 </center>
 {% endblock %}
@@ -43,31 +54,39 @@
 {% block javascripts %}
 	 {{ parent() }}
     <script type="text/javascript">
-
         $(document).ready(function() {
+
+            var $spectate = $('#rezervation_form_type_spectate');
             var $reprezentation = $('#rezervation_form_type_reprezentation');
 
-            $reprezentation.change(function() {
-
+            $spectate.change(function() {
                 var $form = $(this).closest('form');
-
                 var data = {};
-                data[$reprezentation.attr('name')] = $reprezentation.val();
-
-                // Submit data via AJAX to the form's action path.
+                data[$spectate.attr('name')] = $spectate.val();
                 $.ajax({
                     url : $form.attr('action'),
                     type: $form.attr('method'),
                     data : data,
                     success: function(html) {
+                        $('#reprezentation').html(
+                            $(html).find('#rezervation_form_type_reprezentation').parent()
+                        );
+                    }
+                });
+            });
 
-                        // Replace current position field ...
+            $reprezentation.change(function() {
+                var $form = $(this).closest('form');
+                var data = {};
+                data[$reprezentation.attr('name')] = $reprezentation.val();
+                $.ajax({
+                    url : $form.attr('action'),
+                    type: $form.attr('method'),
+                    data : data,
+                    success: function(html) {
                         $('#seats').html(
-                            // ... with the returned one from the AJAX response.
                             $(html).find('#rezervation_form_type_seats').parent()
                         );
-
-                        // Position field now displays the appropriate positions.
                     }
                 });
             });
