@@ -2,17 +2,13 @@
 
 {% form_theme rezervationForm _self %}
 
-{% block header %}
-	{{ parent() }}
-{% endblock header %}
-
 {% block sidebar %}{% endblock %}
 
 {%- block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
     {%- for child in form %}
 
-        {{- form_widget(child, {'checked':'false'}) -}} 
+        {{- form_widget(child) -}} 
         {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
         
     {% endfor -%}
@@ -32,24 +28,34 @@
         <div class="4u$">
             {{ form_row(rezervationForm.details) }}
         </div>
+        <br>
         <div class="4u$">
             {{ form_row(rezervationForm.spectate) }}
+        </div>
+        <br>
+        <div class="4u$">
             <div id="reprezentation">
-            {% if rezervationForm.reprezentation is defined %}
-                {{ form_row(rezervationForm.reprezentation) }}
-            {% endif %}
+                {% if rezervationForm.reprezentation is defined %}
+                    {{ form_row(rezervationForm.reprezentation) }}
+                {% endif %}
             </div>
         </div>
-    	<div id="seats">
-            {% if rezervationForm.seats is defined %}
-                {{ form_row(rezervationForm.seats) }} 
-            {% endif %}
-    	</div>
         <br>
+        <div class="4u$">
+        	<div id="seats">
+                {% if rezervationForm.seats is defined %}
+                    {{ form_row(rezervationForm.seats) }} 
+                {% endif %}
+        	</div>
+        </div>
+        <br>
+        <div class="4u$">
         {{ form_row(rezervationForm.submit) }}
-
+        </div>
 </center>
 {% endblock %}
+
+{% block footer %}{% endblock %}
 
 {% block javascripts %}
 	 {{ parent() }}
@@ -57,12 +63,14 @@
         $(document).ready(function() {
 
             var $spectate = $('#rezervation_form_type_spectate');
-            var $reprezentation = $('#rezervation_form_type_reprezentation');
 
             $spectate.change(function() {
+                
                 var $form = $(this).closest('form');
                 var data = {};
+                
                 data[$spectate.attr('name')] = $spectate.val();
+                
                 $.ajax({
                     url : $form.attr('action'),
                     type: $form.attr('method'),
@@ -71,25 +79,30 @@
                         $('#reprezentation').html(
                             $(html).find('#rezervation_form_type_reprezentation').parent()
                         );
+                        
+                        var $reprezentation = $('#rezervation_form_type_reprezentation');
+                        
+                        $reprezentation.change(function() {
+                                                        
+                        var $form = $(this).closest('form');
+                        var data = {};
+                                                        
+                        data[$reprezentation.attr('name')] = $reprezentation.val();
+                                                        
+                            $.ajax({
+                                url : $form.attr('action'),
+                                type: $form.attr('method'),
+                                data : data,
+                                success: function(html) {
+                                    $('#seats').html(
+                                        $(html).find('#rezervation_form_type_seats').parent()
+                                    );
+                                }
+                            });
+                        });
                     }
                 });
             });
-
-            $reprezentation.change(function() {
-                var $form = $(this).closest('form');
-                var data = {};
-                data[$reprezentation.attr('name')] = $reprezentation.val();
-                $.ajax({
-                    url : $form.attr('action'),
-                    type: $form.attr('method'),
-                    data : data,
-                    success: function(html) {
-                        $('#seats').html(
-                            $(html).find('#rezervation_form_type_seats').parent()
-                        );
-                    }
-                });
-            });
-        });
+    });
     </script>
 {% endblock %}

@@ -30,10 +30,10 @@ class SpectateAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            //->add('id')
             ->add('name')
             ->add('author')
-            ->add('description')
+            //->add('description')
             ->add('director')
             ->add('duration')
             ->add('image')
@@ -54,7 +54,7 @@ class SpectateAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
+            //->add('id')
             ->add('name')
             ->add('author')
             ->add('description')
@@ -71,7 +71,7 @@ class SpectateAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
+            //->add('id')
             ->add('name')
             ->add('author')
             ->add('description')

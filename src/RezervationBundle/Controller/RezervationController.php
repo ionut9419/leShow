@@ -5,12 +5,13 @@ namespace RezervationBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bridge\Twig\Extension\FormExtension;
+
 use RezervationBundle\Form\RezervationFormType;
 use RezervationBundle\Entity\Rezervation;
 
 use SpectateBundle\Entity\Reprezentation;
 
-class FinalRezervationController extends Controller
+class RezervationController extends Controller
 {
 
     public function rezervationAction(Request $request)
@@ -22,14 +23,19 @@ class FinalRezervationController extends Controller
             RezervationFormType::class
         );
 
+        //var_dump($request);
         $rezervationForm->handleRequest($request);
 
-        if($rezervationForm->isSubmitted() && $rezervationForm->isValid()) {
-                $this->persistData($rezervation);
-                $request->getSession()->getFlashBag()->add('succes', 'Rezervation Made Successfully');
+        var_dump($rezervationForm->getData());
+        // $rezervation->setReprezentation($rezervationForm->getData();
+        // $rezervation->setSeats($rezervationForm->getData()['seats']);
 
-                return $this->redirectToRoute('rezervation_make_final');
-        }
+        // if($rezervationForm->isSubmitted() && $rezervationForm->isValid()) {
+        //         //$this->persistData($rezervation);
+        //         $request->getSession()->getFlashBag()->add('succes', 'You successfully made a reservation');
+
+        //         return $this->redirectToRoute('reservation_make');
+        // }
            
         return $this->render('RezervationBundle:Rezervation:final_rezervation.html.twig',array(
         	'rezervationForm' => $rezervationForm->createView()

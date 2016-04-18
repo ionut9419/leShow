@@ -38,7 +38,7 @@ class ListingController extends Controller
 
         $reprezentationFound = $er->findBySpectate($spectate);
 
-        return $this->render('SpectateBundle:Spectate:list_spectate_reprezentation.html.twig', array(
+        return $this->render('SpectateBundle:Spectate:list_spectate_representation.html.twig', array(
             'reprezentation' => $reprezentationFound,
             'spectate' => $spectate
         ));

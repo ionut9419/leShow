@@ -2,13 +2,11 @@
 
 namespace SpectateBundle\Entity;
 
-/**
- * Reprezentation
- */
 class Reprezentation
 {
+    
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -18,9 +16,9 @@ class Reprezentation
     private $location;
 
     /**
-     * @var string
+     * @var \DateTime
      */
-    private $data;
+    private $date;
 
     /**
      * @var string
@@ -28,15 +26,20 @@ class Reprezentation
     private $distribution;
 
     /**
-     * @var int
+     * @var integer
      */
     private $numberOfSeats;
+
+    /**
+     * @var \SpectateBundle\Entity\Spectate
+     */
+    private $spectate;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -68,27 +71,27 @@ class Reprezentation
     }
 
     /**
-     * Set data
+     * Set date
      *
-     * @param string $data
+     * @param \DateTime $date
      *
      * @return Reprezentation
      */
-    public function setData($data)
+    public function setDate($date)
     {
-        $this->data = $data;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get data
+     * Get date
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getData()
+    public function getDate()
     {
-        return $this->data;
+        return $this->date;
     }
 
     /**
@@ -132,45 +135,11 @@ class Reprezentation
     /**
      * Get numberOfSeats
      *
-     * @return int
+     * @return integer
      */
     public function getNumberOfSeats()
     {
         return $this->numberOfSeats;
-    }
-    /**
-     * @var \DateTime
-     */
-    private $date;
-
-    /**
-     * @var \SpectateBundle\Entity\Spectate
-     */
-    private $spectate;
-
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Reprezentation
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
     }
 
     /**
@@ -199,6 +168,7 @@ class Reprezentation
 
     public function __toString()
     {
-        return $this->location;
+        $s = $this->location." - ".$this->date->format('D h:i');
+        return $s;
     }
 }

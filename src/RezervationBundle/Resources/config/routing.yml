@@ -1,3 +1,7 @@
 rezervation_routing:
     resource: "@RezervationBundle/Resources/config/routing/rezervation.yml"
-    prefix:   /rezervation/
+    prefix:   /reservation/
+
+reservation_make:
+    path:     /spectate/reservation
+    defaults: { _controller: RezervationBundle:Rezervation:rezervation }

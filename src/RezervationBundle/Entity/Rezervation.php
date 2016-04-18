@@ -76,10 +76,10 @@ class Rezervation
     public function setSeats($seats)
     {
         if($seats){
-        $seats = implode(" ",$seats);
-        $seats = trim($seats);
-        $this->seats = $seats;
-        return $this;
+            $seats = implode(" ",$seats);
+            $seats = trim($seats);
+            $this->seats = $seats;
+            return $this;
         }
         else return $this;
     }

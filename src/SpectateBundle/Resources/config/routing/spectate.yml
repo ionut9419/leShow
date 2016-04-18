@@ -7,5 +7,5 @@ spectate_listing_details:
     defaults: { _controller: SpectateBundle:Listing:viewSpectateDetails }
 
 spectate_listing_reprezentation:
-    path:     /reprezentation/{spectate}
+    path:     /representation/{spectate}
     defaults: { _controller: SpectateBundle:Listing:viewSpectateReprezentation }
