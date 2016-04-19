@@ -23,7 +23,6 @@ class RezervationController extends Controller
         $rezervation = new Rezervation();
         $rezervation = $rezervationForm->getData();
 
-        
 
         if($rezervationForm->isSubmitted() && $rezervationForm->isValid()) {
                 $rezervation->setUser($this->getUser());

@@ -6,12 +6,23 @@
 
 {%- block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
+    <table>
     {%- for child in form %}
+    {% if loop.index0 is divisible by (9) %}</tr>
+    <tr>
+        <td>
+            <h4>{{ loop.index0/9 + 1 }}</h4>
+        </td>
+    {% endif %}
 
-        {{- form_widget(child) -}} 
-        {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
-        
+    <td>
+
+            {{- form_widget(child) -}} 
+            {{- form_label(child, loop.index0+1 , {translation_domain: choice_translation_domain}) -}}
+        </td>
+    
     {% endfor -%}
+    </table>
     </div>
 {%- endblock choice_widget_expanded -%}
 
@@ -37,11 +48,15 @@
                         {{ form_row(rezervationForm.reprezentation) }}
                     {% endif %}
                 </div>
+            </div>
+            <div class="8u$">
             	<div id="seats">
                     {% if rezervationForm.seats is defined %}
                         {{ form_row(rezervationForm.seats) }} 
                     {% endif %}
             	</div>
+            </div>
+            <div class="4u$">
                 <br>
                 {{ form_row(rezervationForm.submit) }}
             </div>

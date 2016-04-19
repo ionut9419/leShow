@@ -9,3 +9,11 @@ UserBundle\Entity\User:
         contactNumber:
             - NotBlank:
                 message: 'Please enter a contact number'
+UserBundle\Entity\Contact:
+    properties:
+        name:
+            - NotBlank:
+                message: 'Please enter your name'
+        content:
+            - NotBlank:
+                message: 'Please enter your message'
