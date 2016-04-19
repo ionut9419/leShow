@@ -1,4 +1,3 @@
-
 {% if is_granted('ROLE_SPECTATOR') %}
    	<center>
    		<h2>Welcome to your {{ 'user.profile.view' | trans() }}</h2>
@@ -8,7 +7,8 @@
 		   	<li>{{ user.lastName }}</li>
 		   	<li>{{ user.username }}</li>
 		   	<li>{{ user.contactNumber }}</li>
-		   	<li><a href="{{ url('user_profile_edit') }}" class="button">{{ 'user.profile.edit' | trans }}</a></li>
+		   	<li><a href="{{ url('user_profile_edit') }}" class="button small">{{ 'user.profile.edit' | trans }}</a></li>
+		   	<li><a href="{{ url('fos_user_change_password') }}" class="button small">{{ 'user.profile.change_password' | trans }}</a></li>
 		</ul>
 	</center>
 {% endif %}

@@ -53,32 +53,38 @@ class RezervationFormType extends AbstractType
         $spectateModifier = function (FormInterface $form, $spectate){
             
             if($spectate) {
-                $er = $this->em->getRepository('SpectateBundle:Reprezentation');
-                $reprezentationFound = $er->findBySpectate($spectate);
+                // $er = $this->em->getRepository('SpectateBundle:Reprezentation');
+                // $reprezentationFound = $er->findBySpectate($spectate);
                     
                     $form->add('reprezentation', EntityType::class, array(
                                 'class' => 'SpectateBundle:Reprezentation',
-                                'choices' => $reprezentationFound,
+                                'query_builder' => function($er) use ($spectate)
+                                {
+                                    return $er->createQueryBuilder('r')
+                                              ->select('r')
+                                              ->where('r.spectate = :spectate')
+                                              ->setParameter('spectate', $spectate);
+                                },
+                                //'choices' => $reprezentationFound,
                                 'placeholder' => '------------',
                                 'label' => 'Select Representation'
                                 )
                             );
                 } else {
                     $form->remove('reprezentation');
-                    //$form->remove('seats');
                 }
         };
 
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($spectateModifier) {
-                $data = $event->getData();
-                if(!$data) {
-                    return null;
-                }
-                $spectateModifier($event->getForm()->getParent(), $data->getSpectate());
-            }
-        );
+        // $builder->addEventListener(FormEvents::PRE_SET_DATA,
+        //     function (FormEvent $event) use ($spectateModifier) {
+        //         $data = $event->getData();
+        //         if(!$data) {
+        //             return null;
+        //         }
+        //         $spectateModifier($event->getForm()->getParent(), $data->getSpectate());
+        //     }
+        // );
 
         $builder->get('spectate')->addEventListener(FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($spectateModifier) {
@@ -91,6 +97,7 @@ class RezervationFormType extends AbstractType
             $reprezentationModifier = function (FormInterface $form, $reprezentation) {
                 $er = $this->em->getRepository('SpectateBundle:Reprezentation');
                 $seatNumber = $er->findOneById($reprezentation);
+                
                 if($seatNumber)
                 {   
                     $seatNumberArray = array();
@@ -111,15 +118,15 @@ class RezervationFormType extends AbstractType
                 }
             };
 
-            $builder->addEventListener(FormEvents::POST_SET_DATA,
-                function (FormEvent $event) use ($reprezentationModifier) {
-                    $data = $event->getData();
-                    if(!$data) { 
-                        return null; 
-                    }
-                    $reprezentationModifier($event->getForm(), $data->getReprezentation());
-                }
-            );
+            // $builder->addEventListener(FormEvents::PRE_SET_DATA,
+            //     function (FormEvent $event) use ($reprezentationModifier) {
+            //         $data = $event->getData();
+            //         if(!$data) { 
+            //             return null; 
+            //         }
+            //         $reprezentationModifier($event->getForm(), $data->getReprezentation());
+            //     }
+            // );
 
             $builder->addEventListener(FormEvents::PRE_SUBMIT,
                 function (FormEvent $event) use ($reprezentationModifier) {

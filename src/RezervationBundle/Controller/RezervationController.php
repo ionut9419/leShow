@@ -26,7 +26,7 @@ class RezervationController extends Controller
         //var_dump($request);
         $rezervationForm->handleRequest($request);
 
-        var_dump($rezervationForm->getData());
+        //var_dump($rezervationForm->getData());
         // $rezervation->setReprezentation($rezervationForm->getData();
         // $rezervation->setSeats($rezervationForm->getData()['seats']);
 

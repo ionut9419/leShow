@@ -35,16 +35,17 @@
 {% for s in spectates %}
     <section id="spectate{{ loop.index0 }}" class="wrapper style2 spotlights">
 		<section>
-			<a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" 
-               class="image">
+			<a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" class="image">
                <img src="{% path s.image, 'reference' %}" 
                     alt="{{ s.name }}" 
+                    
                     data-position="center center"/>
             </a>
 				<div class="content">
 					<div class="inner">
 						<h2>{{ s.name }}</h2>
 						<p>{{ s.description }}</p>
+
 						<ul class="actions">
                             <li><a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" 
                                    class="button">View details</a>
@@ -53,6 +54,7 @@
                                    class="button">View Representations</a>
                             </li>
 						</ul>
+
                     </div>
                 </div>
         </section>

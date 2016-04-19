@@ -13,7 +13,7 @@ SpectateBundle\Entity\Reprezentation:
             type: string
             length: 255
         date:
-            type: date
+            type: datetime
         distribution:
             type: text
         numberOfSeats:

@@ -34,13 +34,18 @@
                 <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
         		<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
         </div>
-        <br>
-		<div class="4u">
-				<a href="{{ url('fos_user_resetting_request') }}" class="button small">
-                    {{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}
-                </a>
-        </div>
     </center>
-    
 </form>
+        <br>
+        <center>
+			<div class="4u$">
+				<a href="{{ url('fos_user_resetting_request') }}" class="button small">
+	                {{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}
+	            </a>
+				<a href="{{ url('register_spectator') }}" class="button small">
+	                {{ 'layout.register'|trans({}, 'FOSUserBundle') }}
+	            </a>
+	        </div>
+        </div>
+
 {% endblock fos_user_content %}

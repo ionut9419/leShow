@@ -1,30 +1,27 @@
 {% extends "::base.html.twig" %}
 
-{% block header %}
-	{{ parent() }}
-{% endblock header %}
-
 {% block sidebar %}{% endblock %}
 
 {% block body %}
-<br>
-<div class="row">
-	<blockquote>{{ spectate.description }}</blockquote>
-	<br>
-		<ul class="alt">
-			<li><b>Name:</b> {{ spectate.name }}</li>
-			<li>{{ spectate.author }}</li>
-			<li>{{ spectate.director }}</li>
-			<li>{{ spectate.duration }}</li>
-		</ul>
+<selection class="wrapper style2 spotlights">
+	<div class="content">
+		<div class="inner">
+			<span class="image right">
+				<img src="{% path spectate.image, 'reference' %}" />
+			</span>
 
-						<div class="6u">
-							<span class="image right">
-								<img src="{% path spectate.image, 'reference' %}" />
-							</span>
-						</div>
 	
-</div>
+			<ul class="alt">
+				<li><b>Name:</b> {{ spectate.name }}</li>
+				<li>{{ spectate.author }}</li>
+				<li>{{ spectate.director }}</li>
+				<li>{{ spectate.duration }}</li>
+			</ul>
+			<blockquote>{{ spectate.description }}</blockquote>
+		</div>
+	</div>
+</selection>
+
 {% endblock %}
 
 {% block footer %}{% endblock %}

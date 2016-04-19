@@ -3,5 +3,6 @@ user:
     profile:
         view: 'Profile'
         edit: 'Edit Profile'
+        change_password: 'Change Password'
 spectate:
     view: 'Spectate'

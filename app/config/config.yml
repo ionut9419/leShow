@@ -141,7 +141,8 @@ sonata_media:
             providers:
                 - sonata.media.provider.image
                 - sonata.media.provider.youtube
-            formats: ~
+            formats:
+                sidebar: { width: 100, quality: 100 }
 
 
 
