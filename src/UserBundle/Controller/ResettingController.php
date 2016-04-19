@@ -20,75 +20,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
+use FOS\UserBundle\Controller\ResettingController as BaseResettingController;
 /**
  * Controller managing the resetting of the password
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Christophe Coevoet <stof@notk.org>
  */
-class ResettingController extends Controller
+class ResettingController extends BaseResettingController
 {
-    /**
-     * Request reset user password: show form
-     */
-    public function requestAction()
-    {
-        return $this->render('UserBundle:Resetting:request.html.twig');
-    }
-
-    /**
-     * Request reset user password: submit form and send email
-     */
-    public function sendEmailAction(Request $request)
-    {
-        $username = $request->request->get('username');
-
-        /** @var $user UserInterface */
-        $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
-
-        if (null === $user) {
-            return $this->render('UserBundle:Resetting:request.html.twig', array(
-                'invalid_username' => $username
-            ));
-        }
-
-        if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            return $this->render('UserBundle:Resetting:passwordAlreadyRequested.html.twig');
-        }
-
-        if (null === $user->getConfirmationToken()) {
-            /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
-            $tokenGenerator = $this->get('fos_user.util.token_generator');
-            $user->setConfirmationToken($tokenGenerator->generateToken());
-        }
-
-        $this->get('fos_user.mailer')->sendResettingEmailMessage($user);
-        $user->setPasswordRequestedAt(new \DateTime());
-        $this->get('fos_user.user_manager')->updateUser($user);
-
-        return new RedirectResponse($this->generateUrl('fos_user_resetting_check_email',
-            array('email' => $this->getObfuscatedEmail($user))
-        ));
-    }
-
-    /**
-     * Tell the user to check his email provider
-     */
-    public function checkEmailAction(Request $request)
-    {
-        $email = $request->query->get('email');
-
-        if (empty($email)) {
-            // the user does not come from the sendEmail action
-            return new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
-        }
-
-        return $this->render('UserBundle:Resetting:checkEmail.html.twig', array(
-            'email' => $email,
-        ));
-    }
-
     /**
      * Reset user password
      */
@@ -126,7 +66,7 @@ class ResettingController extends Controller
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_profile_show');
+                $url = $this->generateUrl('user_profile_show');
                 $response = new RedirectResponse($url);
             }
 
@@ -139,24 +79,5 @@ class ResettingController extends Controller
             'token' => $token,
             'form' => $form->createView(),
         ));
-    }
-
-    /**
-     * Get the truncated email displayed when requesting the resetting.
-     *
-     * The default implementation only keeps the part following @ in the address.
-     *
-     * @param \FOS\UserBundle\Model\UserInterface $user
-     *
-     * @return string
-     */
-    protected function getObfuscatedEmail(UserInterface $user)
-    {
-        $email = $user->getEmail();
-        if (false !== $pos = strpos($email, '@')) {
-            $email = '...' . substr($email, $pos);
-        }
-
-        return $email;
     }
 }
