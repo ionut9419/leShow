@@ -40,10 +40,11 @@ class RezervationFormType extends AbstractType
         $builder
             ->add('details', TextareaType::class, array('attr' => array('style' => 'resize:vertical;')))
             ->add('spectate', EntityType::class, array(
-                'class' => 'SpectateBundle:Spectate',
-                'placeholder' => '-----------',
-                'label' => 'Select Spectate'
-                ))
+                    'class' => 'SpectateBundle:Spectate',
+                    'placeholder' => '-----------',
+                    'label' => 'Select Spectate'
+                )
+            )
             //->add('reprezentation', HiddenType::class, array())
             //->add('seats')
             //->add('user')
@@ -55,7 +56,6 @@ class RezervationFormType extends AbstractType
             if($spectate) {
                 // $er = $this->em->getRepository('SpectateBundle:Reprezentation');
                 // $reprezentationFound = $er->findBySpectate($spectate);
-                    
                     $form->add('reprezentation', EntityType::class, array(
                                 'class' => 'SpectateBundle:Reprezentation',
                                 'query_builder' => function($er) use ($spectate)
@@ -70,21 +70,22 @@ class RezervationFormType extends AbstractType
                                 'label' => 'Select Representation'
                                 )
                             );
+                    return $spectate;
                 } else {
-                    $form->remove('reprezentation');
+                    $form->remove('reprezentation');return $spectate;
                 }
         };
 
 
-        // $builder->addEventListener(FormEvents::PRE_SET_DATA,
-        //     function (FormEvent $event) use ($spectateModifier) {
-        //         $data = $event->getData();
-        //         if(!$data) {
-        //             return null;
-        //         }
-        //         $spectateModifier($event->getForm()->getParent(), $data->getSpectate());
-        //     }
-        // );
+        $builder->addEventListener(FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($spectateModifier) {
+                $data = $event->getData();
+                if(!$data) {
+                    return null;
+                }
+                $spectateModifier($event->getForm()->getParent(), $data->getSpectate());
+            }
+        );
 
         $builder->get('spectate')->addEventListener(FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($spectateModifier) {
@@ -95,38 +96,50 @@ class RezervationFormType extends AbstractType
 
 
             $reprezentationModifier = function (FormInterface $form, $reprezentation) {
+                $check = false;
+
+                foreach ($reprezentation as $key => $value) {
+                    if($key == 'reprezentation'){
+                        $check = true;
+                        break;
+                    }
+                }
+
+                if($check){
                 $er = $this->em->getRepository('SpectateBundle:Reprezentation');
-                $seatNumber = $er->findOneById($reprezentation);
-                
-                if($seatNumber)
-                {   
-                    $seatNumberArray = array();
-                    for($i=0; $i<$seatNumber->getNumberOfSeats(); $i++) $seatNumberArray[$i] = $i;
+                $seatNumber = $er->findOneById($reprezentation['reprezentation']);
 
-                    if($reprezentation) {
-                        $form->add('seats', ChoiceType::class,array(
-                                   'choices' => $seatNumberArray,
-                                   'expanded' => true,
-                                   'multiple' => true,
-                                   'label' => 'Select Seats'
-                                )
-                        );
+     
+                    if($seatNumber)
+                    {   
+                        $seatNumberArray = array();
+                        for($i=0; $i<$seatNumber->getNumberOfSeats(); $i++) $seatNumberArray[$i] = $i+1;
 
-                    } else {
-                            $form->remove('seats');
+                        if($reprezentation) {
+                            $form->add('seats', ChoiceType::class,array(
+                                       'choices' => $seatNumberArray,
+                                       'expanded' => true,
+                                       'multiple' => true,
+                                       'label' => 'Select Seats',
+                                    )
+                            );
+
+                        } else {
+                                $form->remove('seats');
+                        }
                     }
                 }
             };
 
-            // $builder->addEventListener(FormEvents::PRE_SET_DATA,
-            //     function (FormEvent $event) use ($reprezentationModifier) {
-            //         $data = $event->getData();
-            //         if(!$data) { 
-            //             return null; 
-            //         }
-            //         $reprezentationModifier($event->getForm(), $data->getReprezentation());
-            //     }
-            // );
+            $builder->addEventListener(FormEvents::POST_SET_DATA,
+                function (FormEvent $event) use ($reprezentationModifier) {
+                    $data = $event->getData();
+                    if(!$data) { 
+                        return null; 
+                    }
+                    $reprezentationModifier($event->getForm(), $data->getReprezentation());
+                }
+            );
 
             $builder->addEventListener(FormEvents::PRE_SUBMIT,
                 function (FormEvent $event) use ($reprezentationModifier) {
@@ -144,7 +157,7 @@ class RezervationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            //'data_class' => 'RezervationBundle\Entity\Rezervation',
+            'data_class' => 'RezervationBundle\Entity\Rezervation',
             'int' => null,
         ));
     }

@@ -8,7 +8,7 @@
     <div {{ block('widget_container_attributes') }}>
     {%- for child in form %}
 
-        {{- form_widget(child, {'attr':{'checked':'true','disabled':'true'}}) -}} 
+        {{- form_widget(child) -}} 
         {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
         
     {% endfor -%}
@@ -17,41 +17,36 @@
 
 {% block body %}
 <center>
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-           {{ message }}
-        {% endfor %}
-  
-    {% endfor %}
-<br>
-	{{ form_start(rezervationForm) }}
         <div class="4u$">
-            {{ form_row(rezervationForm.spectate) }}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                   <div style="color:red">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
         </div>
-        <br>
-        <div class="4u$">
-            <div id="reprezentation">
-                {% if rezervationForm.reprezentation is defined %}
-                    {{ form_row(rezervationForm.reprezentation) }}
-                {% endif %}
+            <br>
+    	{{ form_start(rezervationForm) }}
+        
+            <div class="4u$">
+                {{ form_row(rezervationForm.details) }}
+                {{ form_row(rezervationForm.spectate) }}
+                <div id="reprezentation">
+                    {% if rezervationForm.reprezentation is defined %}
+                        {{ form_row(rezervationForm.reprezentation) }}
+                    {% endif %}
+                </div>
+            	<div id="seats">
+                    {% if rezervationForm.seats is defined %}
+                        {{ form_row(rezervationForm.seats) }} 
+                    {% endif %}
+            	</div>
+                <br>
+                {{ form_row(rezervationForm.submit) }}
             </div>
-        </div>
-        <br>
-        <div class="4u$">
-        	<div id="seats">
-                {% if rezervationForm.seats is defined %}
-                    {{ form_row(rezervationForm.seats) }} 
-                {% endif %}
-        	</div>
-        </div>
-        <br>
-        <div class="4u$">
-            {{ form_row(rezervationForm.details) }}
-        </div>
-        <br>
-        <div class="4u$">
-        {{ form_row(rezervationForm.submit) }}
-        </div>
+            {{ form_rest(rezervationForm) }}
+        {{ form_end(rezervationForm) }}
 </center>
 {% endblock %}
 

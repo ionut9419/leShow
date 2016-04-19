@@ -16,28 +16,24 @@ class RezervationController extends Controller
 
     public function rezervationAction(Request $request)
     {
-        $rezervation = new Rezervation();
-        $rezervation->setUser($this->getUser());
+        $rezervationForm = $this->createForm(RezervationFormType::class);
 
-        $rezervationForm = $this->createForm(
-            RezervationFormType::class
-        );
-
-        //var_dump($request);
         $rezervationForm->handleRequest($request);
 
-        //var_dump($rezervationForm->getData());
-        // $rezervation->setReprezentation($rezervationForm->getData();
-        // $rezervation->setSeats($rezervationForm->getData()['seats']);
+        $rezervation = new Rezervation();
+        $rezervation = $rezervationForm->getData();
 
-        // if($rezervationForm->isSubmitted() && $rezervationForm->isValid()) {
-        //         //$this->persistData($rezervation);
-        //         $request->getSession()->getFlashBag()->add('succes', 'You successfully made a reservation');
+        
 
-        //         return $this->redirectToRoute('reservation_make');
-        // }
+        if($rezervationForm->isSubmitted() && $rezervationForm->isValid()) {
+                $rezervation->setUser($this->getUser());
+                $this->persistData($rezervation);
+                $request->getSession()->getFlashBag()->add('succes', 'You successfully made a reservation');
+
+                return $this->redirectToRoute('reservation_make');
+        }
            
-        return $this->render('RezervationBundle:Rezervation:final_rezervation.html.twig',array(
+        return $this->render('RezervationBundle:Rezervation:rezervation.html.twig',array(
         	'rezervationForm' => $rezervationForm->createView()
         	));
     }

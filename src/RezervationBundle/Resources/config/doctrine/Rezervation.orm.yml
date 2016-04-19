@@ -26,4 +26,10 @@ RezervationBundle\Entity\Rezervation:
                 name: user_id
                 referencedColumnName: id
             cascade: ['persist']
+        spectate:
+            targetEntity: SpectateBundle\Entity\Spectate
+            joinColumn:
+                name: spectate_id
+                referencedColumnName: id
+            cascade: ['persist']
     lifecycleCallbacks: {  }

@@ -33,6 +33,12 @@ class Rezervation
     private $user;
 
     /**
+     * @var \SpectateBundle\Entity\Spectate
+     */
+    private $spectate;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -141,5 +147,34 @@ class Rezervation
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set spectate
+     *
+     * @param \SpectateBundle\Entity\Spectate $spectate
+     *
+     * @return Rezervation
+     */
+    public function setSpectate(\SpectateBundle\Entity\Spectate $spectate = null)
+    {
+        $this->spectate = $spectate;
+
+        return $this;
+    }
+
+    /**
+     * Get spectate
+     *
+     * @return \SpectateBundle\Entity\Spectate
+     */
+    public function getSpectate()
+    {
+        return $this->spectate;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->getId();
     }
 }

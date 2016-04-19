@@ -168,7 +168,8 @@ class Reprezentation
 
     public function __toString()
     {
-        $s = $this->location." - ".$this->date->format('D h:i');
-        return $s;
+        //$s = $this->location." - ".$this->date->format('D h:i');
+        //return $s;
+        return $this->location;
     }
 }
