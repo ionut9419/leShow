@@ -1,25 +1,22 @@
 {% if is_granted('ROLE_SPECTATOR') %}
+   		<center>
    		<h2>Welcome to your {{ 'user.profile.view' | trans() }}</h2>
-
+   		</center>
    		<table>
    		<tr>
-   			<td>First Name:</td>
-   			<td>{{ user.firstName }}</td>
+   			<td><b>Name:</b></td>
+   			<td>{{ user.firstName }} {{ user.lastName }}</td>
    		</tr>
    		<tr>
-   			<td>Last Name:</td>
-   			<td>{{ user.lastName }}</td>
-   		</tr>
-   		<tr>
-   			<td>Username:</td>
+   			<td><b>Username:</b></td>
    			<td>{{ user.username }}</td>
    		</tr>
    		<tr>
-   			<td>Contact Number:</td>
+   			<td><b>Contact Number:</b></td>
    			<td>{{ user.contactNumber }}</td>
    		</tr>
    		<tr>
-   			<td>Email:</td>
+   			<td><b>Email:</b></td>
    			<td>{{ user.email }}</td>
    		</tr>
    		<tr>
@@ -31,6 +28,9 @@
 		   	    <a href="{{ url('fos_user_change_password') }}" 
 		   		   class="button small">
 		   		   {{ 'user.profile.change_password' | trans }}</a>
+		   	    <a href="" 
+		   		   class="button small">
+		   		   View your reservations</a>
 		   	</center>
 			</td>
    		</tr>

@@ -44,7 +44,10 @@
 				<div class="content">
 					<div class="inner">
 						<h2>{{ s.name }}</h2>
-						<p>{{ s.description }}</p>
+						<p>{{ s.description[:255]}}<a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}">
+                                                   ...
+                                                   </a>
+                        </p>
 
 						<ul class="actions">
                             <li><a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" 
