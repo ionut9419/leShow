@@ -15,6 +15,7 @@ UserBundle\Entity\Contact:
         email:
             type: string
             length: 255
+            nullable: true
         content:
             type: string
             length: 255

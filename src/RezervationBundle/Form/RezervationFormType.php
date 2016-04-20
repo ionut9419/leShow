@@ -51,8 +51,8 @@ class RezervationFormType extends AbstractType
             ->add('submit', SubmitType::class, array('label' => 'Submit'))
         ;
 
-        $spectateModifier = function (FormInterface $form, $spectate){
-            
+        $spectateModifier = function (FormInterface $form, $spectate) {
+
             if($spectate) {
                 // $er = $this->em->getRepository('SpectateBundle:Reprezentation');
                 // $reprezentationFound = $er->findBySpectate($spectate);
@@ -109,9 +109,9 @@ class RezervationFormType extends AbstractType
                 $er = $this->em->getRepository('SpectateBundle:Reprezentation');
                 $seatNumber = $er->findOneById($reprezentation['reprezentation']);
 
-     
+
                     if($seatNumber)
-                    {   
+                    {
                         $seatNumberArray = array();
                         for($i=0; $i<$seatNumber->getNumberOfSeats(); $i++) $seatNumberArray[$i] = $i+1;
 
@@ -121,6 +121,7 @@ class RezervationFormType extends AbstractType
                                        'expanded' => true,
                                        'multiple' => true,
                                        'label' => 'Select Seats',
+                                       //'choice_attr' => array('choice_value' => array('prop' => 'val prop'))
                                     )
                             );
 
@@ -131,11 +132,11 @@ class RezervationFormType extends AbstractType
                 }
             };
 
-            $builder->addEventListener(FormEvents::POST_SET_DATA,
+            $builder->addEventListener(FormEvents::PRE_SET_DATA,
                 function (FormEvent $event) use ($reprezentationModifier) {
                     $data = $event->getData();
-                    if(!$data) { 
-                        return null; 
+                    if(!$data) {
+                        return null;
                     }
                     $reprezentationModifier($event->getForm(), $data->getReprezentation());
                 }
@@ -150,7 +151,7 @@ class RezervationFormType extends AbstractType
 
 
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
