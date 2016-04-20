@@ -16,11 +16,10 @@
     {% endif %}
 
     <td>
-
-            {{- form_widget(child) -}} 
+            {{- form_widget(child) -}}
             {{- form_label(child, loop.index0+1 , {translation_domain: choice_translation_domain}) -}}
         </td>
-    
+
     {% endfor -%}
     </table>
     </div>
@@ -38,8 +37,8 @@
             {% endfor %}
         </div>
             <br>
-    	{{ form_start(rezervationForm) }}
-        
+    	{{ form_start(rezervationForm, {'attr':{'novalidate':''} } ) }}
+
             <div class="4u$">
                 {{ form_row(rezervationForm.details) }}
                 {{ form_row(rezervationForm.spectate) }}
@@ -52,7 +51,7 @@
             <div class="8u$">
             	<div id="seats">
                     {% if rezervationForm.seats is defined %}
-                        {{ form_row(rezervationForm.seats) }} 
+                        {{ form_row(rezervationForm.seats) }}
                     {% endif %}
             	</div>
             </div>
@@ -75,12 +74,12 @@
             var $spectate = $('#rezervation_form_type_spectate');
 
             $spectate.change(function() {
-                
+
                 var $form = $(this).closest('form');
                 var data = {};
-                
+
                 data[$spectate.attr('name')] = $spectate.val();
-                
+
                 $.ajax({
                     url : $form.attr('action'),
                     type: $form.attr('method'),
@@ -89,16 +88,16 @@
                         $('#reprezentation').html(
                             $(html).find('#rezervation_form_type_reprezentation').parent()
                         );
-                        
+
                         var $reprezentation = $('#rezervation_form_type_reprezentation');
-                        
+
                         $reprezentation.change(function() {
-                                                        
+
                         var $form = $(this).closest('form');
                         var data = {};
-                                                        
+
                         data[$reprezentation.attr('name')] = $reprezentation.val();
-                                                        
+
                             $.ajax({
                                 url : $form.attr('action'),
                                 type: $form.attr('method'),

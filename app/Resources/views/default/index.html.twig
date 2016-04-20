@@ -2,7 +2,7 @@
 
 {% block header %}{% endblock header %}
 
-{% block body %}    
+{% block body %}
 <!-- Intro -->
 <section id="intro" class="wrapper style1 fullscreen fade-up">
     <div class="inner">
@@ -51,7 +51,7 @@
         </ul>
         {% endif %}
     </div>
-</section>    
+</section>
 
 <!-- One -->
     <section id="one" class="wrapper style2 spotlights">
@@ -153,17 +153,20 @@
                                         {% endfor %}
                                     </div>
                                     <br>
-                                    {{ form_start(contactForm) }}
+                                    {{ form_start(contactForm, {'attr':{'novalidate':''}}) }}
                                     <div class="field half first">
                                         {{ form_label(contactForm.name) }}
+                                        {{ form_errors(contactForm.name) }}
                                         {{ form_widget(contactForm.name) }}
                                     </div>
                                     <div class="field half">
                                         {{ form_label(contactForm.email) }}
+                                        {{ form_errors(contactForm.email) }}
                                         {{ form_widget(contactForm.email) }}
                                     </div>
                                      <div class="field">
                                         {{ form_label(contactForm.content) }}
+                                        {{ form_errors(contactForm.content) }}
                                         {{ form_widget(contactForm.content) }}
                                     </div>
                                         {{ form_label(contactForm.submit) }}

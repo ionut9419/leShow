@@ -15,7 +15,7 @@ class DefaultController extends Controller
 		$contact = new Contact();
 
 		$contactForm = $this->createForm(
-			ContactType::class, 
+			ContactType::class,
 			$contact
 		);
 
@@ -24,10 +24,8 @@ class DefaultController extends Controller
         if($contactForm->isSubmitted() && $contactForm->isValid()) {
                 $this->persistData($contact);
                 $request->getSession()->getFlashBag()->add('succes', 'Thank you for your feedback');
-
                 return $this->redirectToRoute('user_homepage');
         }
-
         return $this->render(':default:index.html.twig', array(
                 'contactForm' => $contactForm->createView(),
             )

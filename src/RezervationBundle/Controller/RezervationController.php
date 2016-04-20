@@ -26,12 +26,15 @@ class RezervationController extends Controller
 
         if($rezervationForm->isSubmitted() && $rezervationForm->isValid()) {
                 $rezervation->setUser($this->getUser());
+                // var_dump($rezervation);
+                // die('xxx');
                 $this->persistData($rezervation);
+
                 $request->getSession()->getFlashBag()->add('succes', 'You successfully made a reservation');
 
                 return $this->redirectToRoute('reservation_make');
         }
-           
+
         return $this->render('RezervationBundle:Rezervation:rezervation.html.twig',array(
         	'rezervationForm' => $rezervationForm->createView()
         	));
