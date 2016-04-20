@@ -23,13 +23,10 @@ class RezervationController extends Controller
         $rezervation = new Rezervation();
         $rezervation = $rezervationForm->getData();
 
-
         if($rezervationForm->isSubmitted() && $rezervationForm->isValid()) {
-                $rezervation->setUser($this->getUser());
-                // var_dump($rezervation);
-                // die('xxx');
-                $this->persistData($rezervation);
 
+                $rezervation->setUser($this->getUser());
+                $this->persistData($rezervation);
                 $request->getSession()->getFlashBag()->add('succes', 'You successfully made a reservation');
 
                 return $this->redirectToRoute('reservation_make');

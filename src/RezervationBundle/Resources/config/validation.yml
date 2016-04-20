@@ -1,0 +1,11 @@
+RezervationBundle\Entity\Rezervation:
+    properties:
+        # seats:
+        #     - NotBlank:
+        #           message: 'Please select at least one seat'
+        # spectate:
+        #       - NotBlank:
+        #             message: 'Please select a spectate'
+        # reprezentation:
+        #       - NotBlank:
+        #             message: 'Please select a reprezentation'

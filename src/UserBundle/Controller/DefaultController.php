@@ -5,7 +5,7 @@ namespace UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use UserBundle\Entity\Contact;
-use UserBundle\Form\ContactType;
+use UserBundle\Form\Type\ContactType;
 
 
 class DefaultController extends Controller

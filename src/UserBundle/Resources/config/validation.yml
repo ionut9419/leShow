@@ -17,3 +17,6 @@ UserBundle\Entity\Contact:
         content:
             - NotBlank:
                 message: 'Please enter your message'
+        email:
+            - Email:
+                message: 'Please enter a valid email address'

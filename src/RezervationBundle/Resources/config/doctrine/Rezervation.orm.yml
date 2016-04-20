@@ -11,6 +11,7 @@ RezervationBundle\Entity\Rezervation:
     fields:
         details:
             type: text
+            nullable: true
         seats:
             type: text
     manyToOne:

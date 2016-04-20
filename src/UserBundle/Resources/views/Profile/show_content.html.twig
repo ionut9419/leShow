@@ -1,14 +1,38 @@
 {% if is_granted('ROLE_SPECTATOR') %}
-   	<center>
    		<h2>Welcome to your {{ 'user.profile.view' | trans() }}</h2>
 
-   		<ul class="alt">
-		   	<li>{{ user.firstName }}</li>
-		   	<li>{{ user.lastName }}</li>
-		   	<li>{{ user.username }}</li>
-		   	<li>{{ user.contactNumber }}</li>
-		   	<li><a href="{{ url('user_profile_edit') }}" class="button small">{{ 'user.profile.edit' | trans }}</a></li>
-		   	<li><a href="{{ url('fos_user_change_password') }}" class="button small">{{ 'user.profile.change_password' | trans }}</a></li>
-		</ul>
-	</center>
+   		<table>
+   		<tr>
+   			<td>First Name:</td>
+   			<td>{{ user.firstName }}</td>
+   		</tr>
+   		<tr>
+   			<td>Last Name:</td>
+   			<td>{{ user.lastName }}</td>
+   		</tr>
+   		<tr>
+   			<td>Username:</td>
+   			<td>{{ user.username }}</td>
+   		</tr>
+   		<tr>
+   			<td>Contact Number:</td>
+   			<td>{{ user.contactNumber }}</td>
+   		</tr>
+   		<tr>
+   			<td>Email:</td>
+   			<td>{{ user.email }}</td>
+   		</tr>
+   		<tr>
+			<td colspan="2">
+			<center>
+				<a href="{{ url('user_profile_edit') }}" 
+		   	       class="button small">
+		   	       {{ 'user.profile.edit' | trans }}</a>
+		   	    <a href="{{ url('fos_user_change_password') }}" 
+		   		   class="button small">
+		   		   {{ 'user.profile.change_password' | trans }}</a>
+		   	</center>
+			</td>
+   		</tr>
+   		</table>
 {% endif %}

@@ -45,7 +45,7 @@ class RezervationFormType extends AbstractType
                     'label' => 'Select Spectate'
                 )
             )
-            //->add('reprezentation', HiddenType::class, array())
+            //->add('reprezentation')
             //->add('seats')
             //->add('user')
             ->add('submit', SubmitType::class, array('label' => 'Submit'))
@@ -54,25 +54,24 @@ class RezervationFormType extends AbstractType
         $spectateModifier = function (FormInterface $form, $spectate) {
 
             if($spectate) {
-                // $er = $this->em->getRepository('SpectateBundle:Reprezentation');
-                // $reprezentationFound = $er->findBySpectate($spectate);
-                    $form->add('reprezentation', EntityType::class, array(
-                                'class' => 'SpectateBundle:Reprezentation',
-                                'query_builder' => function($er) use ($spectate)
+                $form->add('reprezentation', EntityType::class, array(
+                            'class' => 'SpectateBundle:Reprezentation',
+                            'query_builder' => 
+                                function($er) use ($spectate)
                                 {
                                     return $er->createQueryBuilder('r')
                                               ->select('r')
                                               ->where('r.spectate = :spectate')
                                               ->setParameter('spectate', $spectate);
                                 },
-                                //'choices' => $reprezentationFound,
-                                'placeholder' => '------------',
-                                'label' => 'Select Representation'
-                                )
-                            );
+                            'placeholder' => '------------',
+                            'label' => 'Select Representation'
+                            )
+                        );
+                return $spectate;
+            } else {
+                    $form->remove('reprezentation');
                     return $spectate;
-                } else {
-                    $form->remove('reprezentation');return $spectate;
                 }
         };
 
@@ -106,22 +105,25 @@ class RezervationFormType extends AbstractType
                 }
 
                 if($check){
-                $er = $this->em->getRepository('SpectateBundle:Reprezentation');
-                $seatNumber = $er->findOneById($reprezentation['reprezentation']);
-
+                    $er = $this->em->getRepository('SpectateBundle:Reprezentation');
+                    $seatNumber = $er->findOneById($reprezentation['reprezentation']);
 
                     if($seatNumber)
                     {
                         $seatNumberArray = array();
-                        for($i=0; $i<$seatNumber->getNumberOfSeats(); $i++) $seatNumberArray[$i] = $i+1;
+                        for($i=0; $i<$seatNumber->getNumberOfSeats(); $i++) 
+                            $seatNumberArray[$i] = $i+1;
 
                         if($reprezentation) {
+                            $er = $this->em->getRepository('RezervationBundle:Rezervation');
+                            $rezervations = $er->findByReprezentation($reprezentation['reprezentation']);
+
                             $form->add('seats', ChoiceType::class,array(
                                        'choices' => $seatNumberArray,
                                        'expanded' => true,
                                        'multiple' => true,
                                        'label' => 'Select Seats',
-                                       //'choice_attr' => array('choice_value' => array('prop' => 'val prop'))
+                                       'choice_attr' => $this->getOccupied($rezervations),
                                     )
                             );
 
@@ -171,5 +173,29 @@ class RezervationFormType extends AbstractType
     public function getBlockPrefix()
     {
         return 'rezervation_form_type';
+    }
+
+    public function getOccupied($objects)
+    {
+        $array = array();
+
+        foreach ($objects as $object) 
+        {
+            $shit = $object->getSeats();
+
+            for($i=0;$i<sizeof($shit);$i++) 
+            {
+                $array[] = (int)$shit[$i] - 1;
+            }
+        }
+
+        $array = array_flip($array);
+
+        foreach ($array as $key => $value) 
+        {
+            $array[$key] = array('checked' => true, 'disabled' => true);
+        }
+
+        return $array;   
     }
 }

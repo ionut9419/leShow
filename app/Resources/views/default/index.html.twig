@@ -11,7 +11,7 @@
                 {% for type, messages in app.session.flashbag.all() %}
                     {% for message in messages %}
                     <div style="color:red">
-                        {{ message }}
+                        {{ message }} 
                     </div>
                     {% endfor %}
                 {% endfor %}
@@ -143,30 +143,22 @@
                             <p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
                             <div class="split style1">
                                 <section>
-                                    <div class="4u$">
-                                        {% for type, messages in app.session.flashbag.all() %}
-                                            {% for message in messages %}
-                                               <div style="color:red">
-                                                {{ message }}
-                                                </div>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <br>
                                     {{ form_start(contactForm, {'attr':{'novalidate':''}}) }}
+                                    <div style="color: red;">
+                                    {{ form_errors(contactForm.name)}}
+                                    {{ form_errors(contactForm.email) }}
+                                    {{ form_errors(contactForm.content) }}
+                                    </div>
                                     <div class="field half first">
                                         {{ form_label(contactForm.name) }}
-                                        {{ form_errors(contactForm.name) }}
                                         {{ form_widget(contactForm.name) }}
                                     </div>
                                     <div class="field half">
                                         {{ form_label(contactForm.email) }}
-                                        {{ form_errors(contactForm.email) }}
                                         {{ form_widget(contactForm.email) }}
                                     </div>
                                      <div class="field">
                                         {{ form_label(contactForm.content) }}
-                                        {{ form_errors(contactForm.content) }}
                                         {{ form_widget(contactForm.content) }}
                                     </div>
                                         {{ form_label(contactForm.submit) }}

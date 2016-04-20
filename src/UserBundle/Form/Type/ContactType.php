@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\Form;
+namespace UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +25,7 @@ class ContactType extends AbstractType
                 )
             )
             ->add('submit', SubmitType::class, array(
-                'attr' => array('class' => 'action'),
+                'attr' => array('class' => 'button submit'),
                 'label' => 'send'
                 )
             )

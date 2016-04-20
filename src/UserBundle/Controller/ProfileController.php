@@ -17,8 +17,13 @@ class ProfileController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        return $this->render('FOSUserBundle:Profile:show.html.twig', array(
-            'user' => $user
+        $em = $this->getDoctrine()->getManager();
+        $er = $em->getRepository('RezervationBundle:Rezervation');
+        $rezervations = $er->findByUser($this->getUser());
+
+        return $this->render('UserBundle:Profile:show.html.twig', array(
+            'user' => $user,
+            'rezervations' => $rezervations
         ));
     }
 
