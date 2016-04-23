@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -13,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -25,11 +27,13 @@ class RezervationFormType extends AbstractType
 {
     private $tokentStorage;
     private $em;
+    private $stack;
 
-    public function __construct($tokentStorage,EntityManager $em)
+    public function __construct($tokentStorage,EntityManager $em, RequestStack $stack)
     {
         $this->tokentStorage = $tokentStorage;
         $this->em = $em;
+        $this->stack = $stack;
     }
     /**
      * @param FormBuilderInterface $builder
@@ -37,6 +41,8 @@ class RezervationFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $request = $this->stack->getCurrentRequest();
+
         $builder
             ->add('details', TextareaType::class, array('attr' => array('style' => 'resize:vertical;')))
             ->add('spectate', EntityType::class, array(
@@ -77,7 +83,7 @@ class RezervationFormType extends AbstractType
 
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($spectateModifier) {
+            function (FormEvent $event) use ($spectateModifier){
                 $data = $event->getData();
                 if(!$data) {
                     return null;
@@ -87,7 +93,7 @@ class RezervationFormType extends AbstractType
         );
 
         $builder->get('spectate')->addEventListener(FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($spectateModifier) {
+            function (FormEvent $event) use ($spectateModifier, $request) {
                 $spectate = $event->getData();
                 $spectateModifier($event->getForm()->getParent(), $spectate);
             }
@@ -145,10 +151,10 @@ class RezervationFormType extends AbstractType
             );
 
             $builder->addEventListener(FormEvents::PRE_SUBMIT,
-                function (FormEvent $event) use ($reprezentationModifier) {
+                function (FormEvent $event) use ($reprezentationModifier, $request) {
                     $reprezentation = $event->getData();
                     $reprezentationModifier($event->getForm(), $reprezentation);
-                }
+                }, 900
             );
 
 

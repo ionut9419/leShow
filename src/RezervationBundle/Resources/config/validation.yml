@@ -1,11 +1,13 @@
 RezervationBundle\Entity\Rezervation:
+    constraints:
+        - RezervationBundle\Validator\Constraints\ReservedSeat: ~
     properties:
-        # seats:
-        #     - NotBlank:
-        #           message: 'Please select at least one seat'
-        # spectate:
-        #       - NotBlank:
-        #             message: 'Please select a spectate'
-        # reprezentation:
-        #       - NotBlank:
-        #             message: 'Please select a reprezentation'
+        seats:
+            - NotBlank:
+                  message: 'Please select at least one seat'
+        spectate:
+              - NotBlank:
+                    message: 'Please select a spectate'
+        reprezentation:
+              - NotBlank:
+                    message: 'Please select a reprezentation'

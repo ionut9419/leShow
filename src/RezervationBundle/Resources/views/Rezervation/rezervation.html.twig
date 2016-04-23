@@ -85,9 +85,11 @@
                     type: $form.attr('method'),
                     data : data,
                     success: function(html) {
+                        //$(html).find('#rezervation_form_type_reprezentation').parent().find('ul').remove();
                         $('#reprezentation').html(
                             $(html).find('#rezervation_form_type_reprezentation').parent()
                         );
+                        $('#reprezentation').find('ul').remove();
 
                         var $reprezentation = $('#rezervation_form_type_reprezentation');
 
@@ -106,6 +108,7 @@
                                     $('#seats').html(
                                         $(html).find('#rezervation_form_type_seats').parent()
                                     );
+                                    $('#seats').find('ul').remove();
                                 }
                             });
                         });
