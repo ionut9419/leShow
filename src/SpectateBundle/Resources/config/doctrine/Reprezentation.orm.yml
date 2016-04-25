@@ -24,5 +24,6 @@ SpectateBundle\Entity\Reprezentation:
             joinColumn:
                 name: spectate_id
                 referencedColumnName: id
+            inversedBy: reprezentations
             cascade: ['persist']
     lifecycleCallbacks: {  }

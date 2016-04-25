@@ -1,40 +1,36 @@
 {% extends "::base.html.twig" %}
 
-{% block header %}
-	{{ parent() }}
-{% endblock header %}
-
 {% block sidebar %}{% endblock %}
 
 {% block body %}
-
-{% if reprezentation %}
-<center>
-	<br>
-		{{ spectate.name }} | 
-		{{ spectate.author }} | 
-		
-	<br>
-	{% for r in reprezentation %}
-		{{ r.location }} - {{ r.date | date("m/d/Y")}} HOURS {{ r.date | date("h:i") }} -
-		<a href="{{ url('reservation_make') }}">Reserve seats</a>
-		<br>
-	{% endfor %}
-</center>
-{% else %}
-<center>
-	<br>
-	<h2>No Results Found</h2>
-	<br>
-	<a href="{{ url('spectate_listing_details', {'spectate' :spectate.id }) }}"
-	   class="button">
-	   Go back to {{ spectate.name }} details</a>
-	<br>
-	<br>
-	<br>
-</center>
-{% endif %}
-
 {% endblock %}
+{% block representation %}
+		{% if reprezentation %}
+		<center>
+			<br>
+				{{ spectate.name }} | 
+				{{ spectate.author }} | 
+				
+			<br>
+			{% for r in reprezentation %}
+				{{ r.location }} - {{ r.date | date("m/d/Y")}} HOURS {{ r.date | date("h:i") }} -
+				<a href="{{ url('reservation_make') }}">Reserve seats</a>
+				<br>
+			{% endfor %}
+		</center>
+		{% else %}
+		<center>
+			<br>
+			<h2>No Results Found</h2>
+			<br>
+			<a href="{{ url('spectate_listing_details', {'spectate' :spectate.id }) }}"
+			   class="button">
+			   Go back to {{ spectate.name }} details</a>
+			<br>
+			<br>
+			<br>
+		</center>
+		{% endif %}
+	{% endblock %}
 
 {% block footer %}{% endblock %}

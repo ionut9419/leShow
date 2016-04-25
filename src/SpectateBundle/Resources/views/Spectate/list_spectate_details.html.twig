@@ -3,24 +3,62 @@
 {% block sidebar %}{% endblock %}
 
 {% block body %}
-<selection class="wrapper style2 spotlights">
-	<div class="content">
-		<div class="inner">
-			<span class="image right">
-				<img src="{% path spectate.image, 'reference' %}" />
-			</span>
-
-	
-			<ul class="alt">
-				<li><b>Name:</b> {{ spectate.name }}</li>
-				<li>{{ spectate.author }}</li>
-				<li>{{ spectate.director }}</li>
-				<li>{{ spectate.duration }}</li>
-			</ul>
-			<blockquote>{{ spectate.description }}</blockquote>
+<selection class="wrapper">
+	<div class="row uniform">
+		<div class="content">
+			<div class="inner">
+                <div class="12u$">
+                    <img style="position: relative;right:0%"src="{% path spectate.image, 'reference' %}" class="image right"/>
+                </div>
+                <center>  
+				<div class="6u$">
+					<ul class="action" style="list-style-type: none">
+						<li><b>Name</b> {{ spectate.name }}</li>
+						<li><b>Author</b> {{ spectate.author }}</li>
+						<li><b>Director</b> {{ spectate.director }}</li>
+						<li><b>Duration</b> {{ spectate.duration }} min</li>
+					</ul>
+				</div>
+					
+				<div class="6u" data-position="center center">
+					<b>Representations</b>
+					<ul class="action" style="list-style-type: none;">
+						{% for r in representations %}
+							<li>{{ r.location }} at {{ r.date | date('h:i M d, Y') }}
+                            <a href="#reprezentation{{loop.index0}}">Read More</a>
+                            </li>
+						{% endfor %}
+					</ul>
+				</div>
+                </center>
+                
+			</div>
+            <blockquote>{{ spectate.description | nl2br}}</blockquote> 
 		</div>
 	</div>
 </selection>
+
+{% for r in representations %}
+    <section id="reprezentation{{loop.index0}}" class="wrapper style0 spotlights">
+        <section>
+            <div class="content">
+                <div class="inner">
+                    <h2>{{ r.location }} at {{ r.date | date('h:i M d, Y') }}</h2>
+                    <p><b>Distribution</b><br>{{ r.distribution | nl2br }}</p>
+                    <b>Seats Available</b>
+                    {% if r.numberOfSeats - seatsOccupied[loop.index0] %}
+                        <p>{{ r.numberOfSeats - seatsOccupied[loop.index0] | nl2br }}</p>
+                    <ul class="actions">
+                        <li><a href="{{ url('reservation_make')}}" class="button">Reserve Seats</a></li>
+                    </ul>
+                    {% else %}
+                        <p><b>No seats available</b></p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </section>
+{% endfor %}
 
 {% endblock %}
 

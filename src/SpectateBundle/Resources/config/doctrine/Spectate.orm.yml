@@ -24,11 +24,11 @@ SpectateBundle\Entity\Spectate:
             type: integer
         status:
             type: boolean
-    # oneToMany:
-    #     reprezentations:
-    #         targetEntity: SpectateBundle\Entity\Spectate
-    #         mappedBy: spectate
-    #         cascade: ['persist']
+    oneToMany:
+        reprezentations:
+            targetEntity: SpectateBundle\Entity\Reprezentation
+            mappedBy: spectate
+            cascade: ['persist']
     manyToOne:
         image:
             targetEntity: Application\Sonata\MediaBundle\Entity\Media

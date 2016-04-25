@@ -1,9 +1,5 @@
 {% extends "::base.html.twig" %}
 
-{% block header %}
-	{{ parent() }}
-{% endblock header %}
-
 {% block sidebar %}
 <section id="sidebar">
     <div class="inner">
@@ -37,17 +33,13 @@
 		<section>
 			<a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" class="image">
                <img src="{% path s.image, 'reference' %}" 
-                    alt="{{ s.name }}" 
-                    
+                    alt="{{ s.name }}"
                     data-position="center center"/>
             </a>
 				<div class="content">
 					<div class="inner">
 						<h2>{{ s.name }}</h2>
-						<p>{{ s.description[:255]}}<a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}">
-                                                   ...
-                                                   </a>
-                        </p>
+						<p>{{ s.description| truncate(200, true) | nl2br}}</p>
 
 						<ul class="actions">
                             <li><a href="{{ url('spectate_listing_details', {'spectate' :s.id }) }}" 

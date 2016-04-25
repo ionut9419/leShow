@@ -47,6 +47,10 @@ class Spectate
      */
     private $image;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $reprezentations;
 
     /**
      * Get id
@@ -229,5 +233,47 @@ class Spectate
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reprezentations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reprezentation
+     *
+     * @param \SpectateBundle\Entity\Spectate $reprezentation
+     *
+     * @return Spectate
+     */
+    public function addReprezentation(\SpectateBundle\Entity\Spectate $reprezentation)
+    {
+        $this->reprezentations[] = $reprezentation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reprezentation
+     *
+     * @param \SpectateBundle\Entity\Spectate $reprezentation
+     */
+    public function removeReprezentation(\SpectateBundle\Entity\Spectate $reprezentation)
+    {
+        $this->reprezentations->removeElement($reprezentation);
+    }
+
+    /**
+     * Get reprezentations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReprezentations()
+    {
+        return $this->reprezentations;
     }
 }
