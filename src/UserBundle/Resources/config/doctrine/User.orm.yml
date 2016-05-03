@@ -18,10 +18,10 @@ UserBundle\Entity\User:
         contactNumber:
             type: string
             length: 255
-    # oneToMany:
-    #     rezervations:
-    #         targetEntity: RezervationBundle\Entity\Rezervation
-    #         mappedBy: user
+    oneToMany:
+        reservations:
+            targetEntity: RezervationBundle\Entity\Rezervation
+            mappedBy: user
     # manyToMany:
     #     spectate:
     #         targetEntity: SpectateBundle\Entity\Spectate

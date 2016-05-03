@@ -21,7 +21,7 @@ class ReservedSeatValidator extends ConstraintValidator
 
         $reservedSeats = $this->getOccupied($rezervations);
 
-        $seatsArray = $reservation->getSeats();
+        $seatsArray = explode(" ",$reservation->getSeats());
 
         foreach($seatsArray as $seat) {
         	if(in_array($seat, $reservedSeats)) 
@@ -37,7 +37,7 @@ class ReservedSeatValidator extends ConstraintValidator
 
         foreach ($objects as $object) 
         {
-            $shit = $object->getSeats();
+            $shit = explode(" ",$object->getSeats());
 
             for($i=0;$i<sizeof($shit);$i++) 
             {

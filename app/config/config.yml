@@ -116,7 +116,24 @@ sonata_block:
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
             contexts: [admin]
+        sonata.block.service.rss:
+
         # ...
+
+sonata_admin:
+    title: '%admin_title%'
+    #title_logo: bundles/acmedemo/img/fancy_acme_logo.png
+    dashboard:
+        blocks:
+            -
+                position: left
+                type: sonata.admin.block.admin_list
+            # -
+            #     position: right
+            #     type: sonata.block.service.rss
+            #     settings:
+            #         title: www.rfi.ro FEED
+            #         url: http://www.rfi.ro/taxonomy/term/10/all/feed.xml
 
 sonata_media:
     # if you don't use default namespace configuration

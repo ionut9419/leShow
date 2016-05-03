@@ -29,7 +29,7 @@ class RezervationAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            //->add('id')
             ->add('details')
             ->add('seats')
             ->add('reprezentation')
@@ -50,7 +50,7 @@ class RezervationAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
+            //->add('id')
             ->add('details')
             ->add('seats')
             ->add('reprezentation')
@@ -64,7 +64,7 @@ class RezervationAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
+            //->add('id')
             ->add('details')
             ->add('seats')
             ->add('reprezentation')

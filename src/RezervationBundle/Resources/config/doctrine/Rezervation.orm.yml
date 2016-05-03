@@ -27,6 +27,7 @@ RezervationBundle\Entity\Rezervation:
                 name: user_id
                 referencedColumnName: id
             cascade: ['persist']
+            inversedBy: reservations
         spectate:
             targetEntity: SpectateBundle\Entity\Spectate
             joinColumn:

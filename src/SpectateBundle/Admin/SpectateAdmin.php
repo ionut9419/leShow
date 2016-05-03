@@ -28,15 +28,18 @@ class SpectateAdmin extends Admin
      * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
-    {
+    {   
+
         $listMapper
+            ->addIdentifier('name')
             //->add('id')
-            ->add('name')
+            //->add('name')
             ->add('author')
             //->add('description')
             ->add('director')
-            ->add('duration')
+            ->add('duration', null, array('label' => 'Duration(minutes)'))
             ->add('image')
+            ->add('reprezentations', null, array('label' => 'Representations'))
             ->add('status')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -52,7 +55,7 @@ class SpectateAdmin extends Admin
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
-    {
+    {   
         $formMapper
             //->add('id')
             ->add('name')
@@ -61,6 +64,7 @@ class SpectateAdmin extends Admin
             ->add('director')
             ->add('duration')
             ->add('image')
+            ->add('reprezentations', null, array('label' => 'Representations'))
             ->add('status')
         ;
     }
@@ -78,6 +82,7 @@ class SpectateAdmin extends Admin
             ->add('director')
             ->add('duration')
             ->add('image')
+            ->add('reprezentations', null, array('label' => 'Representations'))
             ->add('status')
         ;
     }

@@ -97,8 +97,9 @@ class Rezervation
      */
     public function getSeats()
     {
-        $seatsArray = explode(" ",$this->seats);
-        return $seatsArray;
+        // $seatsArray = explode(" ",$this->seats);
+        // return $seatsArray;
+        return $this->seats;
     }
 
     /**

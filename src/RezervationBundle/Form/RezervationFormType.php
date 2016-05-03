@@ -44,7 +44,9 @@ class RezervationFormType extends AbstractType
         $request = $this->stack->getCurrentRequest();
 
         $builder
-            ->add('details', TextareaType::class, array('attr' => array('style' => 'resize:vertical;')))
+            ->add('details', TextareaType::class, array(
+                'label' => 'Details (optional)',
+                'attr' => array('style' => 'resize:vertical;')))
             ->add('spectate', EntityType::class, array(
                     'class' => 'SpectateBundle:Spectate',
                     'placeholder' => '-----------',
@@ -100,45 +102,45 @@ class RezervationFormType extends AbstractType
         );
 
 
-            $reprezentationModifier = function (FormInterface $form, $reprezentation) {
-                $check = false;
+        $reprezentationModifier = function (FormInterface $form, $reprezentation) {
+            $check = false;
 
-                foreach ($reprezentation as $key => $value) {
-                    if($key == 'reprezentation'){
-                        $check = true;
-                        break;
+            foreach ($reprezentation as $key => $value) {
+                if($key == 'reprezentation'){
+                    $check = true;
+                    break;
+                }
+            }
+
+            if($check){
+                $er = $this->em->getRepository('SpectateBundle:Reprezentation');
+                $seatNumber = $er->findOneById($reprezentation['reprezentation']);
+
+                if($seatNumber)
+                {
+                    $seatNumberArray = array();
+                    for($i=0; $i<$seatNumber->getNumberOfSeats(); $i++) 
+                        $seatNumberArray[$i] = $i+1;
+
+                    if($reprezentation) {
+                        $er = $this->em->getRepository('RezervationBundle:Rezervation');
+                        $rezervations = $er->findByReprezentation($reprezentation['reprezentation']);
+
+                        $form->add('seats', ChoiceType::class,array(
+                                   'choices' => $seatNumberArray,
+                                   'expanded' => true,
+                                   'multiple' => true,
+                                   'label' => 'Select Seats',
+                                   'choice_attr' => $this->getOccupied($rezervations),
+                                )
+                        );
+
+                    } else {
+                            $form->remove('seats');
                     }
                 }
-
-                if($check){
-                    $er = $this->em->getRepository('SpectateBundle:Reprezentation');
-                    $seatNumber = $er->findOneById($reprezentation['reprezentation']);
-
-                    if($seatNumber)
-                    {
-                        $seatNumberArray = array();
-                        for($i=0; $i<$seatNumber->getNumberOfSeats(); $i++) 
-                            $seatNumberArray[$i] = $i+1;
-
-                        if($reprezentation) {
-                            $er = $this->em->getRepository('RezervationBundle:Rezervation');
-                            $rezervations = $er->findByReprezentation($reprezentation['reprezentation']);
-
-                            $form->add('seats', ChoiceType::class,array(
-                                       'choices' => $seatNumberArray,
-                                       'expanded' => true,
-                                       'multiple' => true,
-                                       'label' => 'Select Seats',
-                                       'choice_attr' => $this->getOccupied($rezervations),
-                                    )
-                            );
-
-                        } else {
-                                $form->remove('seats');
-                        }
-                    }
-                }
-            };
+            }
+        };
 
             $builder->addEventListener(FormEvents::PRE_SET_DATA,
                 function (FormEvent $event) use ($reprezentationModifier) {
@@ -187,7 +189,7 @@ class RezervationFormType extends AbstractType
 
         foreach ($objects as $object) 
         {
-            $shit = $object->getSeats();
+            $shit = explode(" ",$object->getSeats());
 
             for($i=0;$i<sizeof($shit);$i++) 
             {

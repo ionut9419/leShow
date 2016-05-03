@@ -29,6 +29,8 @@ class User extends BaseUser
      */
     protected $contactNumber;
 
+    protected $reservations;
+
     /**
      * Get id
      *
@@ -109,5 +111,39 @@ class User extends BaseUser
     public function getContactNumber()
     {
         return $this->contactNumber;
+    }
+
+    /**
+     * Add reservation
+     *
+     * @param \RezervationBundle\Entity\Rezervation $reservation
+     *
+     * @return User
+     */
+    public function addReservation(\RezervationBundle\Entity\Rezervation $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \RezervationBundle\Entity\Rezervation $reservation
+     */
+    public function removeReservation(\RezervationBundle\Entity\Rezervation $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

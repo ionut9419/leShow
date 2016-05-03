@@ -21,6 +21,7 @@ class ReprezentationAdmin extends Admin
             ->add('date')
             ->add('distribution')
             ->add('numberOfSeats')
+            ->add('spectate')
         ;
     }
 
@@ -35,6 +36,7 @@ class ReprezentationAdmin extends Admin
             ->add('date')
             ->add('distribution')
             ->add('numberOfSeats')
+            ->add('spectate')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -56,6 +58,7 @@ class ReprezentationAdmin extends Admin
             ->add('date')
             ->add('distribution')
             ->add('numberOfSeats')
+            ->add('spectate')
         ;
     }
 
@@ -70,6 +73,7 @@ class ReprezentationAdmin extends Admin
             ->add('date')
             ->add('distribution')
             ->add('numberOfSeats')
+            ->add('spectate')
         ;
     }
 }

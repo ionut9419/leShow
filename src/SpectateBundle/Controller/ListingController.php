@@ -61,7 +61,7 @@ class ListingController extends Controller
 
         foreach ($objects as $object) 
         {
-            $shit = $object->getSeats();
+            $shit = explode(" ",$object->getSeats());
             $array[] = sizeof($shit);
         }
         $sum = 0;
