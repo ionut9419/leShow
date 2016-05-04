@@ -19,3 +19,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     email_address:     no-reply@show.com
     sender_name:       leShow
+    admin_title: leShow
